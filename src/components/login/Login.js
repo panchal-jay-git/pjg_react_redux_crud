@@ -39,8 +39,8 @@ const Login = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Container component="main" maxWidth="xs" sx={{ mt: 8 }}>
+      <Paper elevation={3} sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', borderRadius: 2, boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)' }}>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -77,7 +77,7 @@ const Login = () => {
             fullWidth
             variant="contained"
             color="primary"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, textTransform: 'none', fontWeight: 'bold' }}
             disabled={loading} // Disable button while loading
           >
             {loading ? <CircularProgress size={24} sx={{ color: 'inherit' }} /> : 'Sign In'}

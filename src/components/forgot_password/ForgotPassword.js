@@ -41,7 +41,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ mt: 8 }}>
       <CustomPaper elevation={6}>
         <Typography component="h1" variant="h5" gutterBottom>
           Forgot Password
@@ -68,7 +68,7 @@ const ForgotPassword = () => {
             fullWidth
             variant="contained"
             color="primary"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, textTransform: 'none', fontWeight: 'bold' }}
           >
             Send Reset Link
           </Button>
