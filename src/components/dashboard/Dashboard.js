@@ -10,9 +10,6 @@ import {
   TableRow,
   TableCell,
   TableContainer,
-  TableFooter,
-  IconButton,
-  Box,
 } from '@mui/material';
 import {
   LineChart,
@@ -26,83 +23,14 @@ import {
   Bar,
   ResponsiveContainer,
 } from 'recharts';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-// Sample data
-const dataLineChart = [
-  { name: 'Jan', value: 400 },
-  { name: 'Feb', value: 300 },
-  { name: 'Mar', value: 200 },
-  { name: 'Apr', value: 278 },
-  { name: 'May', value: 189 },
-];
-
-const dataBarChart = [
-  { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
-  { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
-  { name: 'Page C', uv: 2000, pv: 9800, amt: 2290 },
-  { name: 'Page D', uv: 2780, pv: 3908, amt: 2000 },
-  { name: 'Page E', uv: 1890, pv: 4800, amt: 2181 },
-];
-
-const dataTable1 = [
-  { id: 1, name: 'Item 1', value: 100 },
-  { id: 2, name: 'Item 2', value: 200 },
-  { id: 3, name: 'Item 3', value: 300 },
-];
-
-const dataTable2 = [
-  { id: 1, category: 'A', amount: 50 },
-  { id: 2, category: 'B', amount: 75 },
-  { id: 3, category: 'C', amount: 100 },
-];
-
-const Header = () => (
-  <Paper
-    sx={{
-      padding: 3,
-      mb: 4,
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: '#3a3a3a',
-      color: '#fff',
-      borderRadius: 2,
-      boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-    }}
-  >
-    <Typography variant="h4" gutterBottom>
-      Dashboard
-    </Typography>
-    <Box>
-      <IconButton color="inherit">
-        <NotificationsIcon />
-      </IconButton>
-      <IconButton color="inherit">
-        <AccountCircleIcon />
-      </IconButton>
-    </Box>
-  </Paper>
-);
-
-const Footer = () => (
-  <Paper
-    sx={{
-      padding: 2,
-      mt: 4,
-      backgroundColor: '#3a3a3a',
-      color: '#fff',
-      borderRadius: 2,
-      textAlign: 'center',
-      boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-    }}
-  >
-    <Typography variant="body2">
-      © {new Date().getFullYear()} React Redux App
-    </Typography>
-  </Paper>
-);
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
+import {
+  amountData,
+  monthlyLineChart,
+  productData,
+  salesBarChart,
+} from '../../common/Constant';
 
 const SimpleTable = ({ title, data, columns }) => (
   <Paper
@@ -111,13 +39,14 @@ const SimpleTable = ({ title, data, columns }) => (
       borderRadius: 2,
       backgroundColor: '#fff',
       mb: 4,
-      boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
+      width: '100%',
     }}
   >
-    <Typography variant="h6" gutterBottom>
+    <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
       {title}
     </Typography>
-    <TableContainer sx={{ maxHeight: 300 }}>
+    <TableContainer sx={{ maxHeight: 400 }}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>
@@ -135,7 +64,10 @@ const SimpleTable = ({ title, data, columns }) => (
               key={row.id}
               hover
               sx={{
-                backgroundColor: rowIndex % 2 === 0 ? '#f9f9f9' : '#f0f0f0',
+                backgroundColor: rowIndex % 2 === 0 ? '#fafafa' : '#f0f0f0',
+                '&:hover': {
+                  backgroundColor: '#e0e0e0',
+                },
               }}
             >
               <TableCell sx={{ fontWeight: 'bold' }}>{rowIndex + 1}</TableCell>
@@ -145,13 +77,6 @@ const SimpleTable = ({ title, data, columns }) => (
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={columns.length + 1} align="center" sx={{ backgroundColor: '#f0f0f0' }}>
-              Footer Content
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
     </TableContainer>
   </Paper>
@@ -159,64 +84,67 @@ const SimpleTable = ({ title, data, columns }) => (
 
 const Dashboard = () => {
   return (
-    <Container sx={{ mt: 4, mb: 4, padding: 0 }}>
+    <Container maxWidth={false} sx={{ mt: 4, mb: 4, padding: 0, width: '100%' }}>
       <Header />
 
-      <Grid container spacing={4}>
+      <Grid container spacing={6}> {/* Increased spacing to add more space between the left and right charts */}
         <Grid item xs={12} md={6}>
           <Paper
             sx={{
               padding: 3,
               borderRadius: 2,
-              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
+              width: '100%',
+              mb: 4,
             }}
           >
-            <Typography variant="h6" gutterBottom>
-              Line Chart
+            <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+              Monthly Visitors
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={dataLineChart}>
-                <CartesianGrid strokeDasharray="3 3" />
+              <LineChart data={monthlyLineChart} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="value" stroke="#1976d2" strokeWidth={2} />
+                <Line type="monotone" dataKey="visitors" stroke="#1976d2" strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </Paper>
         </Grid>
-
         <Grid item xs={12} md={6}>
           <Paper
             sx={{
               padding: 3,
               borderRadius: 2,
-              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
+              width: '100%',
+              mb: 2,
+              backgroundColor: '#ffffff',
             }}
           >
-            <Typography variant="h6" gutterBottom>
-              Bar Chart
+            <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
+              Sales by Product
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={dataBarChart}>
-                <CartesianGrid strokeDasharray="3 3" />
+              <BarChart data={salesBarChart}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="uv" fill="#1976d2" radius={[10, 10, 0, 0]} />
-                <Bar dataKey="pv" fill="#82ca9d" radius={[10, 10, 0, 0]} />
+                <Bar dataKey="sales" fill="#1976d2" />
+                <Bar dataKey="profit" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
           </Paper>
         </Grid>
-
         <Grid item xs={12}>
-          <SimpleTable title="Table 1" data={dataTable1} columns={['id','Name', 'Value']} />
+          <SimpleTable title="Product Sales Data" data={productData} columns={['Id', 'Product', 'Price']} />
         </Grid>
         <Grid item xs={12}>
-          <SimpleTable title="Table 2" data={dataTable2} columns={['id','Category', 'Amount']} />
+          <SimpleTable title="Amount Data" data={amountData} columns={['Id', 'Category', 'Amount']} />
         </Grid>
       </Grid>
 
@@ -224,6 +152,5 @@ const Dashboard = () => {
     </Container>
   );
 };
-
 
 export default Dashboard;

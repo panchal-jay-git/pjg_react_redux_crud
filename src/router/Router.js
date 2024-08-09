@@ -4,9 +4,11 @@ import ItemList from '../components/dashboard/Dashboard';
 import Login from '../components/login/Login';
 import Register from '../components/register/Register';
 import ForgotPassword from '../components/forgot_password/ForgotPassword';
+import { useSelector } from 'react-redux';
 
 const AppRouter = () => {
-  const isAuthenticated = true; // This should be updated based on your authentication logic
+    const isAuthenticated = useSelector((state) => state.auth.user !== null);
+  
 
   return (
     <Router>

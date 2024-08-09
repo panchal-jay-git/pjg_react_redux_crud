@@ -3,6 +3,6 @@ import auth from './auth/Auth';
 
 export const store = configureStore({
   reducer: {
-    Auth: auth,
+    auth: auth,
   },
 });

@@ -11,42 +11,41 @@ import {
   Typography,
   Container,
   Box,
+  Paper,
+  CircularProgress
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Logo from '../../assets/space.jpg';
-
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
-    navigate('/dashboard');
+    setLoading(true);
+    try {
+      const resultAction = await dispatch(loginUser({ email, password }));
+      if (loginUser.fulfilled.match(resultAction)) {
+        navigate('/dashboard'); // Redirect to dashboard on successful login
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Container component="main" maxWidth="xs" className="login-container">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          backgroundColor: 'rgba(255, 255, 255, 0.8)', // Slightly transparent background
-          padding: '2rem',
-          borderRadius: '8px',
-        }}
-      >
-        <img src={Logo} alt="Logo" style={{ width: '100px', marginBottom: '1rem' }} />
+    <Container component="main" maxWidth="xs">
+      <Paper elevation={3} sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign In
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -77,9 +76,11 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
+            color="primary"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading} // Disable button while loading
           >
-            Sign In
+            {loading ? <CircularProgress size={24} sx={{ color: 'inherit' }} /> : 'Sign In'}
           </Button>
           <Grid container>
             <Grid item xs>
@@ -94,7 +95,7 @@ const Login = () => {
             </Grid>
           </Grid>
         </Box>
-      </Box>
+      </Paper>
     </Container>
   );
 };
