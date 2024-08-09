@@ -2,6 +2,12 @@
   "name": "react-crud-app",
   "version": "0.1.0",
   "private": true,
+  "author": "Jay Panchal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panchal-jay-git/pjg_react_redux_crud"
+  },
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
