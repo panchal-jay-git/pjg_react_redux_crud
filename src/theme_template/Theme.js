@@ -1,20 +1,20 @@
-// src/theme.js
+// src/theme_template/Theme.js
 import { createTheme } from '@mui/material/styles';
+import { grey, blue } from '@mui/material/colors';
 
-const theme = createTheme({
+const getTheme = (mode) => createTheme({
   palette: {
+    mode: mode,
     primary: {
-      main: '#1976d2', // Blue
-    },
-    secondary: {
-      main: '#dc004e', // Pink
+      main: mode === 'dark' ? blue[700] : blue[500],
     },
     background: {
-      default: '#f4f6f8', // Light Gray
+      default: mode === 'dark' ? grey[900] : grey[100],
+      paper: mode === 'dark' ? grey[800] : '#fff',
     },
     text: {
-      primary: '#333',
-      secondary: '#555',
+      primary: mode === 'dark' ? '#fff' : '#000',
+      secondary: mode === 'dark' ? grey[400] : grey[800],
     },
   },
   typography: {
@@ -25,8 +25,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           padding: '16px',
-          backgroundColor: '#fff', // Paper background
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Soft shadow
+          backgroundColor: mode === 'dark' ? grey[800] : '#fff',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         },
       },
     },
@@ -40,4 +40,4 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+export default getTheme;

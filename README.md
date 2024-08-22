@@ -38,7 +38,7 @@ Make sure you have the following installed:
 
    ```bash
    mkdir your-folder-name
-   git clone https://github.com/your-username/your-repository.git
+   git clone https://github.com/panchal-jay-git/pjg_react_redux_crud.git
    cd your-folder-name
    ```
 

@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   TableContainer,
+  useTheme,
 } from '@mui/material';
 import {
   LineChart,
@@ -32,57 +33,65 @@ import {
   salesBarChart,
 } from '../../common/Constant';
 
-const SimpleTable = ({ title, data, columns }) => (
-  <Paper
-    sx={{
-      padding: 3,
-      borderRadius: 2,
-      backgroundColor: '#fff',
-      mb: 4,
-      boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
-      width: '100%',
-    }}
-  >
-    <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
-      {title}
-    </Typography>
-    <TableContainer sx={{ maxHeight: 400 }}>
-      <Table stickyHeader>
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>#</TableCell>
-            {columns.map((column, index) => (
-              <TableCell key={index} sx={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>
-                {column}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row, rowIndex) => (
-            <TableRow
-              key={row.id}
-              hover
-              sx={{
-                backgroundColor: rowIndex % 2 === 0 ? '#fafafa' : '#f0f0f0',
-                '&:hover': {
-                  backgroundColor: '#e0e0e0',
-                },
-              }}
-            >
-              <TableCell sx={{ fontWeight: 'bold' }}>{rowIndex + 1}</TableCell>
-              {Object.values(row).map((value, index) => (
-                <TableCell key={index}>{value}</TableCell>
+
+
+const SimpleTable = ({ title, data, columns }) => {
+  const theme = useTheme(); // Use theme hook for dynamic styling
+
+  return (
+    <Paper
+      sx={{
+        padding: 3,
+        borderRadius: 2,
+        backgroundColor: theme.palette.background.paper,
+        mb: 4,
+        boxShadow: theme.shadows[5],
+        width: '100%',
+      }}
+    >
+      <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
+        {title}
+      </Typography>
+      <TableContainer sx={{ maxHeight: 400 }}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ backgroundColor: theme.palette.divider, fontWeight: 'bold' }}>#</TableCell>
+              {columns.map((column, index) => (
+                <TableCell key={index} sx={{ backgroundColor: theme.palette.divider, fontWeight: 'bold' }}>
+                  {column}
+                </TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </Paper>
-);
+          </TableHead>
+          <TableBody>
+            {data.map((row, rowIndex) => (
+              <TableRow
+                key={row.id}
+                hover
+                sx={{
+                  backgroundColor: rowIndex % 2 === 0 ? theme.palette.background.default : theme.palette.background.paper,
+                  '&:hover': {
+                    backgroundColor: theme.palette.action.hover,
+                  },
+                }}
+              >
+                <TableCell sx={{ fontWeight: 'bold' }}>{rowIndex + 1}</TableCell>
+                {Object.values(row).map((value, index) => (
+                  <TableCell key={index}>{value}</TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  );
+};
 
 const Dashboard = () => {
+  const theme = useTheme(); // Use theme hook for dynamic styling
+
   return (
     <Container maxWidth={false} sx={{ mt: 4, mb: 4, padding: 0, width: '100%' }}>
       <Header />
@@ -93,9 +102,10 @@ const Dashboard = () => {
             sx={{
               padding: 3,
               borderRadius: 2,
-              boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
+              boxShadow: theme.shadows[5],
               width: '100%',
               mb: 4,
+              backgroundColor: theme.palette.background.paper,
             }}
           >
             <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
@@ -103,12 +113,12 @@ const Dashboard = () => {
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={monthlyLineChart} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.grey[300]} />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="visitors" stroke="#1976d2" strokeWidth={3} />
+                <Line type="monotone" dataKey="visitors" stroke={theme.palette.primary.main} strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </Paper>
@@ -118,10 +128,10 @@ const Dashboard = () => {
             sx={{
               padding: 3,
               borderRadius: 2,
-              boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.15)',
+              boxShadow: theme.shadows[5],
               width: '100%',
               mb: 2,
-              backgroundColor: '#ffffff',
+              backgroundColor: theme.palette.background.paper,
             }}
           >
             <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 'bold' }}>
@@ -129,13 +139,13 @@ const Dashboard = () => {
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={salesBarChart}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.grey[300]} />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="sales" fill="#1976d2" />
-                <Bar dataKey="profit" fill="#82ca9d" />
+                <Bar dataKey="sales" fill={theme.palette.primary.main} />
+                <Bar dataKey="profit" fill={theme.palette.success.main} />
               </BarChart>
             </ResponsiveContainer>
           </Paper>

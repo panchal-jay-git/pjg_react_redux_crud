@@ -5,6 +5,7 @@ import Login from '../components/login/Login';
 import Register from '../components/register/Register';
 import ForgotPassword from '../components/forgot_password/ForgotPassword';
 import { useSelector } from 'react-redux';
+import Settings from '../components/settings/Settings';
 
 const AppRouter = () => {
     const isAuthenticated = useSelector((state) => state.auth.user !== null);
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/settings" element={<Settings />} />
 
         {/* Navigate to login if route doesn't match */}
         <Route path="*" element={<Navigate to="/" />} />

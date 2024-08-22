@@ -15,7 +15,7 @@ const Footer = () => {
       }}
     >
       <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-        © {new Date().getFullYear()} React App
+        © {new Date().getFullYear()} React App Jay Panchal
       </Typography>
       <Box sx={{ mt: 1 }}>
         <Typography variant="body2">
