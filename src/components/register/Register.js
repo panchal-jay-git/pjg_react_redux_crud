@@ -12,6 +12,7 @@ import {
   Link,
   Grid
 } from '@mui/material';
+import { showSuccessToast, showErrorToast } from '../../common/ToastMessages';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -20,10 +21,15 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(registerUser({ name, email, password }));
-    navigate('/');
+    try {
+      await dispatch(registerUser({ name, email, password }));
+      showSuccessToast('Registration successful!');
+      navigate('/');
+    } catch (error) {
+      showErrorToast('Registration failed!');
+    }
   };
 
   return (

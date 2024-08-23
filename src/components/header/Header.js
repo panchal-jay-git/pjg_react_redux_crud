@@ -4,6 +4,7 @@ import {
   Paper, Typography, IconButton, Box, Avatar, Menu, MenuItem, Drawer, 
   List, ListItem, ListItemIcon, ListItemText, Divider 
 } from '@mui/material';
+import PropTypes from 'prop-types';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonIcon from '@mui/icons-material/Person';
@@ -13,7 +14,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import { grey } from '@mui/material/colors';
 import { useNavigate, Link } from 'react-router-dom';
-import Settings from '../settings/Settings';
+
+
 
 const Sidebar = ({ open, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -43,30 +45,31 @@ const Sidebar = ({ open, toggleSidebar }) => {
           <List>
             <ListItem button onClick={handleBack} sx={{ borderRadius: 2 }}>
               <ListItemIcon sx={{ color: '#1976d2' }}>
-                <ArrowBackIcon />
+                <ArrowBackIcon alt="Back Icon" />
               </ListItemIcon>
               <ListItemText primary="Back" />
             </ListItem>
             <Divider sx={{ backgroundColor: '#7f8c8d', marginY: 1 }} />
             <ListItem button sx={{ borderRadius: 2, '&:hover': { backgroundColor: '#7f8c8d', color: '#fff' } }}>
               <ListItemIcon sx={{ color: '#1976d2' }}>
-                <DashboardIcon />
+                <DashboardIcon alt="Dashboard Icon" />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItem>
             <ListItem button sx={{ borderRadius: 2, '&:hover': { backgroundColor: '#7f8c8d', color: '#fff' } }}>
               <ListItemIcon sx={{ color: '#1976d2' }}>
-                <PersonIcon />
+                <PersonIcon alt="Products Details Icon" />
               </ListItemIcon>
               <ListItemText primary="Products Details" />
             </ListItem>
-            <ListItem  button 
+            <ListItem 
+              button 
               component={Link} 
               to="/settings"
               sx={{ borderRadius: 2, '&:hover': { backgroundColor: '#7f8c8d', color: '#fff' } }}
             >
               <ListItemIcon sx={{ color: '#1976d2' }}>
-                <SettingsIcon />
+                <SettingsIcon alt="Settings Icon" />
               </ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItem>
@@ -78,7 +81,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
           <List>
             <ListItem button sx={{ borderRadius: 2, '&:hover': { backgroundColor: '#7f8c8d', color: '#fff' } }}>
               <ListItemIcon sx={{ color: '#1976d2' }}>
-                <PersonIcon />
+                <PersonIcon alt="Profile Icon" />
               </ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItem>
@@ -86,7 +89,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
           <List>
             <ListItem button sx={{ borderRadius: 2, '&:hover': { backgroundColor: '#7f8c8d', color: '#fff' } }}>
               <ListItemIcon sx={{ color: '#e74c3c' }}>
-                <ExitToAppIcon />
+                <ExitToAppIcon alt="Logout Icon" />
               </ListItemIcon>
               <ListItemText primary="Logout" />
             </ListItem>
@@ -97,6 +100,12 @@ const Sidebar = ({ open, toggleSidebar }) => {
     </Drawer>
   );
 };
+
+Sidebar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
+};
+
 
 const Header = () => {
   const user = useSelector((state) => state.auth.user);

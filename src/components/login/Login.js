@@ -15,6 +15,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { showSuccessToast, showErrorToast } from '../../common/ToastMessages';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -29,10 +30,13 @@ const Login = () => {
     try {
       const resultAction = await dispatch(loginUser({ email, password }));
       if (loginUser.fulfilled.match(resultAction)) {
-        navigate('/dashboard'); // Redirect to dashboard on successful login
+        showSuccessToast('Login successful!'); // Show success toast
+        navigate('/dashboard');
+      } else {
+        showErrorToast('Login failed!'); // Show error toast
       }
     } catch (error) {
-      console.error('Login failed:', error);
+      showErrorToast('Login failed!');
     } finally {
       setLoading(false);
     }
@@ -78,7 +82,7 @@ const Login = () => {
             variant="contained"
             color="primary"
             sx={{ mt: 3, mb: 2, textTransform: 'none', fontWeight: 'bold' }}
-            disabled={loading} // Disable button while loading
+            disabled={loading}
           >
             {loading ? <CircularProgress size={24} sx={{ color: 'inherit' }} /> : 'Sign In'}
           </Button>

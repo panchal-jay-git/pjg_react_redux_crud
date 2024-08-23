@@ -7,13 +7,21 @@ import { Provider, useSelector } from 'react-redux';
 import { store } from './redux/Store';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import getTheme from './theme_template/Theme';
+import { ToastContainer } from 'react-toastify';
+import { i18n } from './i18n';
 
 const Root = () => {
-  const darkMode = useSelector((state) => state.theme.darkMode);
+  const darkMode = useSelector((state) => state.theme.theme.darkMode); // Ensure correct path
+  const language = useSelector((state) => state.theme.language); // Ensure correct path
+
+  React.useEffect(() => {
+    i18n.changeLanguage(language); // Update language dynamically
+  }, [language]);
 
   return (
     <ThemeProvider theme={getTheme(darkMode ? 'dark' : 'light')}>
       <CssBaseline />
+      <ToastContainer />
       <App />
     </ThemeProvider>
   );
@@ -26,7 +34,5 @@ root.render(
   </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Measure performance (optional)
 reportWebVitals();
